@@ -4,52 +4,45 @@
 
 <h1 align="center">blockless</h1>
 
-<p align="center"><em>Tame your async — no platform threads were harmed.</em></p>
+<p align="center"><em>Launch async work. Run tasks in parallel. Wait for results.</em></p>
 
-A tiny Java 21 library for virtual thread concurrency. Two things:
+Blockless is a small Java 21 library that makes it easy to launch asynchronous
+work, run tasks in parallel, and wait for completion using straightforward Java code.
 
-1. **`Blockless.get()`** — wait for async results safely, without entering the future's internals
-2. **`Parallel`** — fan out work on virtual threads, collect results, keep your trace context
-
-So your platform threads stay free and your context tags along for the ride.
+- **`Blockless`** — run callables on virtual threads or wait for existing CompletionStages.
+- **`Parallel`** — launch tasks, collect results, and propagate configured trace context.
 
 Zero dependencies in core. Pluggable context propagation for MDC, gRPC, and OpenTelemetry.
 
 ## Quick start
 
 ```java
-// Wait for a CompletionStage without blocking platform threads
-var result = Blockless.get(CompletableFuture.supplyAsync(() -> "hello"));
+// Start a Callable on a virtual thread now; get its result when you need it
+var pending = Blockless.supplier(() -> fetchData());
+doOtherWork();
+var data = pending.get();
 
-// Run a Callable on a virtual thread and get the result
+// Run a Callable on a virtual thread and wait for its result immediately
 var answer = Blockless.get(() -> expensiveComputation());
+
+// Wait for an existing CompletionStage
+var result = Blockless.get(client.fetchAsync());
 ```
 
-## Why `Blockless.get()`
+## Launch work and wait for completion
 
-`CompletableFuture.join()` parks your thread inside the future's own internals.
-If that implementation uses `synchronized` or you're on a platform thread, you
-could block or pin.
+`Blockless.supplier(callable)` starts work immediately on a virtual thread and
+returns a supplier for its result. Call `get()` when you need the value; repeated
+calls return the same result or rethrow the task's failure. Use
+`Blockless.get(callable)` when you want to start the work and wait in one call.
 
-`Blockless.get()` never enters the `CompletionStage` internals. It waits on a
-virtual thread via a `CountDownLatch` — your thread is never at risk, regardless
-of what the stage does internally.
+For an existing CompletionStage, `Blockless.supplier(stage)` registers for its
+completion and returns a supplier you can wait on later. `Blockless.get(stage)`
+waits immediately. The stage's producer and executor continue to control where
+its work runs.
 
-```java
-// Parks inside CompletableFuture internals — you're at the mercy of the implementation.
-String result = someFuture.join();
-
-// Waits on a virtual thread + latch. Your thread never touches the future. 🐉
-String result = Blockless.get(someFuture);
-```
-
-**Defensive coding:** `Blockless.get()` is safe whether your calling thread is a virtual thread or a platform thread. If a refactor, config change, or library upgrade silently changes what thread your code runs on, `.join()` could start blocking platform threads with no warning. `Blockless.get()` stays safe regardless — you don't have to know or care what thread you're on.
-
-Also works with callables — runs them on a virtual thread and blocks for the result:
-
-```java
-var answer = Blockless.get(() -> expensiveComputation());
-```
+Both forms wait on the calling thread. A virtual-thread caller normally parks
+and releases its carrier while waiting; a platform-thread caller remains blocked.
 
 ## Why `Parallel`
 
@@ -73,7 +66,7 @@ var results = futures.stream().map(CompletableFuture::join).toList();
 With blockless:
 
 ```java
-// After: one line, same behavior
+// Run up to ten tasks at a time and collect results in input order
 var results = parallel.withMaxConcurrency(10).map(ids, this::fetchById);
 ```
 
@@ -94,7 +87,7 @@ Supplier<String> data = parallel.async(() -> fetchData());
 // Build a map in parallel
 Map<String, Profile> profiles = parallel.asMap(userIds, id -> loadProfile(id));
 
-// Limit concurrent tasks (extras park until a permit frees up)
+// Limit concurrent tasks (remaining tasks wait to be launched)
 var boundedParallel = parallel.withMaxConcurrency(10);
 List<String> names = boundedParallel.map(userIds, id -> fetchName(id));
 
