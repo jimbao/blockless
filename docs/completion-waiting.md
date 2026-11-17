@@ -10,6 +10,14 @@
 
 A callback that runs on the joining thread can delay `join()` returning even after the result is available. Which thread runs a non-async callback depends on scheduling.
 
+## Conclusion
+
+`join()` combines waiting for a result with helping execute completion work. This makes the caller's progress depend on callback execution and completion timing, even after its requested result is available.
+
+The controlled example demonstrates a correctness consequence: the joining caller executes a callback that waits for code after `join()` to run. Neither can advance. The Blockless supplier wait avoids that dependency by returning the stored outcome without taking over the callback.
+
+**Separating result observation from completion processing is a concrete benefit of Blockless's waiting model.** It avoids the waiting-path coupling reproduced here. Registration timing and ForkJoinPool compensation remain separate concerns, described below.
+
 ## Example: joining can execute another callback
 
 ```java
