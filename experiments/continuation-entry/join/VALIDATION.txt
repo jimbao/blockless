@@ -1,0 +1,76 @@
+Join and native-free supplier follow-up.
+Actual PR37 production source unchanged at d1137b8.
+Native-free tests compile the isolated alternative only; the obsolete native-export requirement test is explicitly filtered.
+
+Corretto 21.0.13.1.2: actual implementation join comparison
+PASS Thread.join: VT caller, same single physical carrier free, locals/TLS/lock isolation and finally publication
+PASS actual supplier.get: VT caller, same single physical carrier free, locals/TLS/lock isolation and finally publication
+PASS negative control: joining a virtual TARGET from platform CALLER occupies original worker; target type creates no caller continuation
+PASS native negative control: active native scope alone does not make join yield a platform caller; current caller Thread identity controls parking
+PASS current-contract diagnostic: actual pending get on raw platform caller rejects; replacing it with join would wait on that platform caller
+PASS join interruption: caller interrupted, target continues; caller flag cleared
+PASS actual get interruption: caller interrupted, target continues; caller flag reasserted
+PASS join timeout/readiness: false leaves target running; completed join observes plain result fields across 1000 races
+PASS readiness distinction: onComplete reads actual value on producer VT before it exits; unconditional producer.join in get would self-deadlock
+ALL join/actual-get contract probes passed
+RAW PT: target has continuation; caller has none; original worker waits in joinNanos; marker cannot run
+VT CALLER: own continuation differs from child; same sole physical carrier runs marker during join; TLS preserved
+PASS public Thread.startVirtualThread child inherits parent's custom scheduler; same sole carrier reusable during join
+METHOD-ONLY: VT method/body joins park, but its PT caller still blocks awaiting String return
+String return and finally preserved; platform-worker release requires caller/root boundary
+
+Corretto 25.0.5.1.2: actual implementation join comparison
+PASS Thread.join: VT caller, same single physical carrier free, locals/TLS/lock isolation and finally publication
+PASS actual supplier.get: VT caller, same single physical carrier free, locals/TLS/lock isolation and finally publication
+PASS negative control: joining a virtual TARGET from platform CALLER occupies original worker; target type creates no caller continuation
+PASS native negative control: active native scope alone does not make join yield a platform caller; current caller Thread identity controls parking
+PASS current-contract diagnostic: actual pending get on raw platform caller rejects; replacing it with join would wait on that platform caller
+PASS join interruption: caller interrupted, target continues; caller flag cleared
+PASS actual get interruption: caller interrupted, target continues; caller flag reasserted
+PASS join timeout/readiness: false leaves target running; completed join observes plain result fields across 1000 races
+PASS readiness distinction: onComplete reads actual value on producer VT before it exits; unconditional producer.join in get would self-deadlock
+ALL join/actual-get contract probes passed
+RAW PT: target has continuation; caller has none; original worker waits in joinNanos; marker cannot run
+VT CALLER: own continuation differs from child; same sole physical carrier runs marker during join; TLS preserved
+PASS public Thread.startVirtualThread child inherits parent's custom scheduler; same sole carrier reusable during join
+METHOD-ONLY: VT method/body joins park, but its PT caller still blocks awaiting String return
+String return and finally preserved; platform-worker release requires caller/root boundary
+
+Corretto 21.0.13.1.2: native-free alternative, no JVM export flags in library suite
+
+Test run finished after 580 ms
+[        10 containers found      ]
+[         0 containers skipped    ]
+[        10 containers started    ]
+[         0 containers aborted    ]
+[        10 containers successful ]
+[         0 containers failed     ]
+[        34 tests found           ]
+[         0 tests skipped         ]
+[        34 tests started         ]
+[         0 tests aborted         ]
+[        34 tests successful      ]
+[         0 tests failed          ]
+
+PASS: deferred PT start retains constructing VT's single-carrier scheduler, ITL and CCL; ordinary TLS is separate; rejected producer stays NEW
+PASS closed custom carrier: real outcome published after body/finally once
+
+Corretto 25.0.5.1.2: native-free alternative, no JVM export flags in library suite
+
+Test run finished after 821 ms
+[        10 containers found      ]
+[         0 containers skipped    ]
+[        10 containers started    ]
+[         0 containers aborted    ]
+[        10 containers successful ]
+[         0 containers failed     ]
+[        34 tests found           ]
+[         0 tests skipped         ]
+[        34 tests started         ]
+[         0 tests aborted         ]
+[        34 tests successful      ]
+[         0 tests failed          ]
+
+PASS: deferred PT start retains constructing VT's single-carrier scheduler, ITL and CCL; ordinary TLS is separate; rejected producer stays NEW
+PASS closed custom carrier: real outcome published after body/finally once
+

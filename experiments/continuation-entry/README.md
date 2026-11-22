@@ -1,5 +1,9 @@
 # Automatic continuation entry: research
 
+The follow-up [virtual-thread join investigation](join/README.md) traces the JDK
+wait path and tests it against the actual supplier, including automatic child
+scheduler inheritance and a method-entry counterexample.
+
 The exact `Continuations.supplier(...); user.get();` source now works in these
 experiments with a managed caller entry. A pending `get()` releases the caller's
 platform carrier and later returns the real value. The tests use the production
