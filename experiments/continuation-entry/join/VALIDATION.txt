@@ -73,4 +73,3 @@ Test run finished after 821 ms
 
 PASS: deferred PT start retains constructing VT's single-carrier scheduler, ITL and CCL; ordinary TLS is separate; rejected producer stays NEW
 PASS closed custom carrier: real outcome published after body/finally once
-
