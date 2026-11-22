@@ -1,0 +1,38 @@
+grpc-core 1.63.0: relevant javap -c -p ServerImplBuilder excerpts
+
+Compiled from "ServerImplBuilder.java"
+public final class io.grpc.internal.ServerImplBuilder extends io.grpc.ServerBuilder<io.grpc.internal.ServerImplBuilder> {
+  private static final java.util.logging.Logger log;
+
+  private static final io.grpc.internal.ObjectPool<? extends java.util.concurrent.Executor> DEFAULT_EXECUTOR_POOL;
+
+
+      55: aload_0
+      56: getstatic     #15                 // Field DEFAULT_EXECUTOR_POOL:Lio/grpc/internal/ObjectPool;
+      59: putfield      #16                 // Field executorPool:Lio/grpc/internal/ObjectPool;
+      62: aload_0
+
+  public io.grpc.internal.ServerImplBuilder executor(java.util.concurrent.Executor);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: ifnull        16
+       5: new           #40                 // class io/grpc/internal/FixedObjectPool
+       8: dup
+       9: aload_1
+      10: invokespecial #41                 // Method io/grpc/internal/FixedObjectPool."<init>":(Ljava/lang/Object;)V
+      13: goto          19
+      16: getstatic     #15                 // Field DEFAULT_EXECUTOR_POOL:Lio/grpc/internal/ObjectPool;
+      19: putfield      #16                 // Field executorPool:Lio/grpc/internal/ObjectPool;
+      22: aload_0
+      23: areturn
+
+  static {};
+    Code:
+       0: ldc           #110                // class io/grpc/internal/ServerImplBuilder
+       2: invokevirtual #111                // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #112                // Method java/util/logging/Logger.getLogger:(Ljava/lang/String;)Ljava/util/logging/Logger;
+       8: putstatic     #86                 // Field log:Ljava/util/logging/Logger;
+      11: getstatic     #113                // Field io/grpc/internal/GrpcUtil.SHARED_CHANNEL_EXECUTOR:Lio/grpc/internal/SharedResourceHolder$Resource;
+      14: invokestatic  #114                // Method io/grpc/internal/SharedResourcePool.forResource:(Lio/grpc/internal/SharedResourceHolder$Resource;)Lio/grpc/internal/SharedResourcePool;
+      17: putstatic     #15                 // Field DEFAULT_EXECUTOR_POOL:Lio/grpc/internal/ObjectPool;

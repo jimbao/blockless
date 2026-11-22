@@ -1,0 +1,22 @@
+{
+  "jvm": "openjdk version \"25.0.5.1\" 2026-11-17 LTS\nOpenJDK Runtime Environment Corretto-25.0.5.1.2 (build 25.0.5.1+2-LTS)\nOpenJDK 64-Bit Server VM Corretto-25.0.5.1.2 (build 25.0.5.1+2-LTS, mixed mode, sharing)",
+  "settings": {
+    "physical_workers": 4,
+    "active_processors": 2,
+    "heap_mb": 512,
+    "db_pool_size": 10,
+    "sleep_seconds": 0.01,
+    "concurrency": 32,
+    "connections": 4,
+    "native_free": true,
+    "warmup_seconds": 1,
+    "measure_seconds": 3,
+    "repetitions": 5
+  },
+  "functional": {
+    "platform": "EXPECTED baseline strict gRPC failure: Status{code=INTERNAL, description=Strict query failed: java.lang.IllegalStateException: Pending continuation results require a virtual-thread caller, cause=null}\nPASS negative control: callerVirtual=false; failure surfaced honestly; state=pool-3-thread-3;callerVirtual=false;entries=1;bodies=1;afterGet=0;callerFinally=1;bodyFinally=1",
+    "automatic": "PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=automatic-entry-19;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1",
+    "virtual": "PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1"
+  },
+  "scenarios": {}
+}

@@ -1,0 +1,66 @@
+Current contract: pending get awaits the actual value or task failure. There is no
+pending-status exception. Production PR37 commit: d6f4fef.
+
+Core + current continuation tests:
+  Corretto 21.0.13.1+2: 36/36 passed, required native export supplied.
+  Corretto 25.0.5.1+2: 36/36 passed, same Java-21-compiled classes.
+  Regression checked against d1137b8: new platform pending-get test fails because
+  the old implementation throws its pending-read exception. Updated code passes.
+
+Native-free supplier tests:
+  Both runtimes: 35/35 applicable existing tests passed with NO exports or opens.
+  Only the obsolete native-export-required test is filtered by NativeFreeSuite.
+  Deferred inheritance and closed-carrier publication probes also passed.
+
+Same compiled strict business source, both runtimes, both implementations:
+  Supplier compatibility on ordinary platform caller: exit 0, actual User value.
+  Unconfigured one-worker carrier-release acceptance: exit 1, diagnosed below.
+  Automatic-entry carrier-release acceptance: exit 0.
+
+The negative acceptance result is:
+  AssertionError: single platform carrier remained occupied by pending get
+The harness first releases the body, verifies the actual User value and cleanup,
+and terminates the owner. This is a failure to release the worker, not a get error
+and not a hung process counted as a passing test.
+
+Positive strict assertions:
+  Same sole physical carrier serves another logical task while direct get waits.
+  Exact value, saved locals, caller context and lock ownership survive.
+  No caller/body replay; each finally runs once before its tracked completion.
+  Original task failure identity survives.
+  Cancellation targets its logical caller; unrelated roots remain untouched.
+  Owner termination waits for actual root cleanup.
+  Cancel root, fully terminate owner, then release its independent supplier body:
+  body resumes on live shared carriers, preserving identity/context/finally/value.
+
+Agent packaging and factory probes on both runtimes:
+  Four fixed/cached factory overloads and their method references transformed.
+  Single/scheduled factories, constructors and excluded prefixes unchanged.
+  Parent-null loader works through the bootstrap helper.
+  Incompatible application ASM coexists with privately relocated agent ASM.
+  Named module works without manual add-reads; JVM instrumentation provides reads.
+  Java-25-compiled factory call bytecode also passed on Java 25.
+
+Real Spring gRPC/PostgreSQL handler, native-free implementation, Java 21:
+  Reply is emitted AFTER immediate supplier.get returns, with no business callback.
+  Waiting platform supplier/get: median 368.38 requests/s; 0/5,611 errors.
+  Automatic-entry supplier/get: median 945.41 requests/s; 0/13,998 errors.
+  Public-VT supplier/get: median 942.47 requests/s; 0/14,258 errors.
+  Public-VT direct query control: median 944.75 requests/s; 0/13,885 errors.
+  Total across six successful measured modes: 0/67,326 errors.
+  Raw summaries and functional traces: network/results/.
+  Settings and exact application commands are retained by network/run-grpc.py.
+
+Default gRPC executor held-query proof:
+  Passed on Java 21 and Java 25, with no native export or manual opens flag.
+  Application executor configuration disabled; only io.grpc.internal. selected.
+  Caller is a logical VT; real query remains pending, health progresses, release
+  returns actual database value, caller/body cleanup counters each become one.
+
+Raw-get helping-loop review is preserved under rejected-pump/:
+  Positive bounded helping works, but cancellation loss, skipped executor hooks,
+  and monitor overlap are reproduced. Those hazard probes do not certify safety.
+
+Scope: selected factories before business entry. This does not retroactively
+capture arbitrary platform frames, cover every executor/framework, or replace
+the JDK's virtual-thread pinning rules. Supplier bodies remain independent.

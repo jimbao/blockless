@@ -1,0 +1,58 @@
+{
+  "jvm": "openjdk version \"21.0.13.1\" 2026-11-17 LTS\nOpenJDK Runtime Environment Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS)\nOpenJDK 64-Bit Server VM Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS, mixed mode, sharing)",
+  "settings": {
+    "physical_workers": 4,
+    "active_processors": 2,
+    "heap_mb": 512,
+    "db_pool_size": 10,
+    "sleep_seconds": 0.01,
+    "concurrency": 32,
+    "connections": 4,
+    "native_free": true,
+    "warmup_seconds": 1,
+    "measure_seconds": 3,
+    "repetitions": 5
+  },
+  "scenarios": {
+    "platform-join": {
+      "median_rps": 368.0802181225715,
+      "median_p95_ms": 107.741636,
+      "min_rps": 344.81862159261107,
+      "max_rps": 370.3306182029802,
+      "count": 5584,
+      "errors": 0
+    },
+    "automatic-join": {
+      "median_rps": 937.0721726294458,
+      "median_p95_ms": 39.914462,
+      "min_rps": 570.6836495715859,
+      "max_rps": 941.4615499828357,
+      "count": 13116,
+      "errors": 0
+    },
+    "automatic-continuation": {
+      "median_rps": 916.9962277085007,
+      "median_p95_ms": 40.58878,
+      "min_rps": 819.1130073419554,
+      "max_rps": 950.5149451667081,
+      "count": 13512,
+      "errors": 0
+    },
+    "virtual-join": {
+      "median_rps": 940.2561127446587,
+      "median_p95_ms": 38.779727,
+      "min_rps": 602.8686344758937,
+      "max_rps": 947.0682071499773,
+      "count": 13263,
+      "errors": 0
+    },
+    "virtual-continuation": {
+      "median_rps": 912.833432543434,
+      "median_p95_ms": 40.511124,
+      "min_rps": 717.2655421342508,
+      "max_rps": 950.2910254052463,
+      "count": 12980,
+      "errors": 0
+    }
+  }
+}

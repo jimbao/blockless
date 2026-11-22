@@ -1,0 +1,9 @@
+platform
+EXPECTED baseline strict gRPC failure: Status{code=INTERNAL, description=Strict query failed: java.lang.IllegalStateException: Pending continuation results require a virtual-thread caller, cause=null}
+PASS negative control: callerVirtual=false; failure surfaced honestly; state=pool-3-thread-1;callerVirtual=false;entries=1;bodies=1;afterGet=0;callerFinally=1;bodyFinally=1
+
+automatic
+PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=automatic-entry-16;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1
+
+virtual
+PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1

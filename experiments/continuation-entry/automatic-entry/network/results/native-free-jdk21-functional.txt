@@ -1,0 +1,12 @@
+platform
+PASS baseline strict gRPC: pending get waits without throwing; actual DB result=50; health uses spare platform workers; callerVirtual=false; state=pool-3-thread-4;callerVirtual=false;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1
+LIMIT baseline: Supplier compatibility is verified; health progress does not prove the waiting platform worker was released
+
+automatic
+PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=automatic-entry-17;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1
+
+virtual
+PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1
+
+grpc-default
+PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=automatic-entry-21;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1

@@ -1,0 +1,6 @@
+Corretto21.0.13.1+2 and25.0.5.1+2, both passed standalone run-probes.sh:
+- Positive raw-A helper services queued B as VT and returns real value.
+- A cancellation interrupt is delivered then lost across B's unmount.
+- Original queued B beforeExecute hook count remains zero.
+- B enters a raw host A's held JVM monitor on both JDKs.
+- Default public VT roots do not preserve platform-owner JVM liveness.

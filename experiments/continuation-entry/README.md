@@ -1,5 +1,17 @@
 # Automatic continuation entry: research
 
+The latest [automatic executor-entry prototype](automatic-entry/README.md) runs
+the unchanged immediate supplier/get code through selected standard executor
+factories and the real Spring gRPC handler. It uses JDK logical virtual threads,
+does not rewrite get, and passes with both the current and native-free suppliers.
+Its scoped startup configuration and measured results are documented there.
+
+## Earlier main and HTTP prototypes
+
+The results below were recorded before PR37 removed its pending-status exception.
+They describe the earlier raw main/HTTP prototypes and their original revision;
+the latest executor-entry suite above tests the current contract.
+
 The follow-up [virtual-thread join investigation](join/README.md) traces the JDK
 wait path and tests it against the actual supplier, including automatic child
 scheduler inheritance and a method-entry counterexample.

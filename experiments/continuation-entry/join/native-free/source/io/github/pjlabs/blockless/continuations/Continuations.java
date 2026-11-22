@@ -12,7 +12,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Research only: no native waiter; pending reads still require a virtual-thread caller. */
+/** Research only: no native waiter; pending reads await the actual outcome. */
 public final class Continuations {
   private static final ThreadLocal<ArrayDeque<Runnable>> DRAINS = new ThreadLocal<>();
 
@@ -50,10 +50,6 @@ public final class Continuations {
   private record ContinuationResult<T>(AsyncSupplier<T> result) implements AsyncSupplier<T> {
     @Override
     public T get() {
-      if (!result.isDone() && !Thread.currentThread().isVirtual()) {
-        throw new IllegalStateException(
-            "Pending continuation results require a virtual-thread caller");
-      }
       return result.get();
     }
 

@@ -1,0 +1,72 @@
+{
+  "jvm": "openjdk version \"21.0.13.1\" 2026-11-17 LTS\nOpenJDK Runtime Environment Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS)\nOpenJDK 64-Bit Server VM Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS, mixed mode, sharing)",
+  "settings": {
+    "physical_workers": 4,
+    "active_processors": 2,
+    "heap_mb": 512,
+    "db_pool_size": 10,
+    "sleep_seconds": 0.01,
+    "concurrency": 32,
+    "connections": 4,
+    "native_free": true,
+    "warmup_seconds": 1,
+    "measure_seconds": 3,
+    "repetitions": 5
+  },
+  "functional": {
+    "platform": "PASS baseline strict gRPC: pending get waits without throwing; actual DB result=50; health uses spare platform workers; callerVirtual=false; state=pool-3-thread-4;callerVirtual=false;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1\nLIMIT baseline: Supplier compatibility is verified; health progress does not prove the waiting platform worker was released",
+    "automatic": "PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=automatic-entry-17;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1",
+    "virtual": "PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1",
+    "grpc-default": "PASS automatic strict gRPC: immediate get returns actual DB result=50; health progresses while pending; callerVirtual=true; state=automatic-entry-21;callerVirtual=true;entries=1;bodies=1;afterGet=1;callerFinally=1;bodyFinally=1"
+  },
+  "scenarios": {
+    "platform-join": {
+      "median_rps": 371.63330843392333,
+      "median_p95_ms": 113.55293,
+      "min_rps": 354.19941023164404,
+      "max_rps": 379.6934573292421,
+      "count": 5703,
+      "errors": 0
+    },
+    "platform-continuation": {
+      "median_rps": 368.3794680132656,
+      "median_p95_ms": 108.40217,
+      "min_rps": 354.097239296651,
+      "max_rps": 371.8289522144308,
+      "count": 5611,
+      "errors": 0
+    },
+    "automatic-join": {
+      "median_rps": 946.9357330962907,
+      "median_p95_ms": 38.832969,
+      "min_rps": 789.8018391076979,
+      "max_rps": 950.5968206155538,
+      "count": 13871,
+      "errors": 0
+    },
+    "automatic-continuation": {
+      "median_rps": 945.4115046226767,
+      "median_p95_ms": 39.444438,
+      "min_rps": 881.2550310476352,
+      "max_rps": 953.6880385342931,
+      "count": 13998,
+      "errors": 0
+    },
+    "virtual-join": {
+      "median_rps": 944.7549081669316,
+      "median_p95_ms": 38.963267,
+      "min_rps": 799.872114928982,
+      "max_rps": 947.5641110016468,
+      "count": 13885,
+      "errors": 0
+    },
+    "virtual-continuation": {
+      "median_rps": 942.470366807636,
+      "median_p95_ms": 37.687026,
+      "min_rps": 930.0419317070091,
+      "max_rps": 948.5602544269952,
+      "count": 14258,
+      "errors": 0
+    }
+  }
+}

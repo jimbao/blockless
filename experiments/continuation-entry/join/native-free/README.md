@@ -1,8 +1,9 @@
 # Native-free supplier runtime: isolated alternative
 
-This research implementation preserves PR #37's current pending-platform-read
-restriction. It does **not** solve automatic entry for an unmanaged platform
-caller. Production source and PR #37 remain unchanged.
+Pending get waits for the actual outcome. Virtual callers park; an ordinary
+platform caller waits on its calling thread. Automatic executor entry is needed
+to release that worker. PR #37 now also removes the pending-read exception;
+the native-free runtime itself remains an isolated research candidate.
 
 The join investigation showed that the core result wait already uses the right
 JDK primitive. A library-owned native continuation around an internal waiting
@@ -27,7 +28,7 @@ that additional scheduling dependency after user cleanup is already complete.
 
 ## Verified behavior
 
-- All 34 applicable existing core and continuation tests pass on Java 21 and 25,
+- All 35 applicable existing core and continuation tests pass on Java 21 and 25,
   without add-exports or add-opens in the library test run. The original test
   requiring failure without native exports is intentionally excluded; no test
   source is copied or modified.
@@ -42,6 +43,12 @@ Construction-time inheritance differs from PR #37's current implementation,
 which constructs the body on a dispatch worker. ScopedValue/container inheritance
 is a separate start-time mechanism; no new ScopedValue guarantee is claimed.
 This is a candidate simplification, not a finished replacement feature.
+
+The follow-up [automatic executor-entry experiment](../../automatic-entry/README.md)
+combines this supplier with instrumented logical-VT callers. Its real gRPC handler
+performs immediate get before responding. An owned scheduler retires to live
+shared carriers after its roots exit, so independently spawned supplier bodies
+can still resume after root cancellation and owner termination.
 
 ## Reproduce
 
