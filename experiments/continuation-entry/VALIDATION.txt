@@ -1,0 +1,129 @@
+Logical virtual-thread ownership: current research sources compiled on Java 21.
+Actual production API classes: PR37 d1137b8, unchanged.
+Public factory control runs without java.lang opens; custom single-carrier diagnostics require it.
+
+blockless-jdk
+PASS: public logical-thread factory, actual supplier/get, no extra java.lang opens
+PASS: actual Continuations.supplier/get, same single physical carrier, logical identity/TLS/lock isolation, finally exactly once
+PASS: cancel(true) interrupts only logical root; unrelated root/carrier preserved; shutdown rejects new work and termination waits finally
+PASS: hidden foreign FutureTask.cancel(true) targets its logical VT, keeps unrelated shared carrier clean, and termination waits actual finally
+PASS: shutdownNow interrupts owned VT roots, waits their actual finally, and preserves borrowed physical carrier
+ALL independent VT-owner review checks passed
+
+blockless-jdk25
+PASS: public logical-thread factory, actual supplier/get, no extra java.lang opens
+PASS: actual Continuations.supplier/get, same single physical carrier, logical identity/TLS/lock isolation, finally exactly once
+PASS: cancel(true) interrupts only logical root; unrelated root/carrier preserved; shutdown rejects new work and termination waits finally
+PASS: hidden foreign FutureTask.cancel(true) targets its logical VT, keeps unrelated shared carrier clean, and termination waits actual finally
+PASS: shutdownNow interrupts owned VT roots, waits their actual finally, and preserves borrowed physical carrier
+ALL independent VT-owner review checks passed
+
+blockless-oracle21
+PASS: public logical-thread factory, actual supplier/get, no extra java.lang opens
+PASS: actual Continuations.supplier/get, same single physical carrier, logical identity/TLS/lock isolation, finally exactly once
+PASS: cancel(true) interrupts only logical root; unrelated root/carrier preserved; shutdown rejects new work and termination waits finally
+PASS: hidden foreign FutureTask.cancel(true) targets its logical VT, keeps unrelated shared carrier clean, and termination waits actual finally
+PASS: shutdownNow interrupts owned VT roots, waits their actual finally, and preserves borrowed physical carrier
+ALL independent VT-owner review checks passed
+
+blockless-oracle25
+PASS: public logical-thread factory, actual supplier/get, no extra java.lang opens
+PASS: actual Continuations.supplier/get, same single physical carrier, logical identity/TLS/lock isolation, finally exactly once
+PASS: cancel(true) interrupts only logical root; unrelated root/carrier preserved; shutdown rejects new work and termination waits finally
+PASS: hidden foreign FutureTask.cancel(true) targets its logical VT, keeps unrelated shared carrier clean, and termination waits actual finally
+PASS: shutdownNow interrupts owned VT roots, waits their actual finally, and preserves borrowed physical carrier
+ALL independent VT-owner review checks passed
+
+blockless-corretto21
+PASS: public logical-thread factory, actual supplier/get, no extra java.lang opens
+PASS: actual Continuations.supplier/get, same single physical carrier, logical identity/TLS/lock isolation, finally exactly once
+PASS: cancel(true) interrupts only logical root; unrelated root/carrier preserved; shutdown rejects new work and termination waits finally
+PASS: hidden foreign FutureTask.cancel(true) targets its logical VT, keeps unrelated shared carrier clean, and termination waits actual finally
+PASS: shutdownNow interrupts owned VT roots, waits their actual finally, and preserves borrowed physical carrier
+ALL independent VT-owner review checks passed
+
+blockless-corretto25
+PASS: public logical-thread factory, actual supplier/get, no extra java.lang opens
+PASS: actual Continuations.supplier/get, same single physical carrier, logical identity/TLS/lock isolation, finally exactly once
+PASS: cancel(true) interrupts only logical root; unrelated root/carrier preserved; shutdown rejects new work and termination waits finally
+PASS: hidden foreign FutureTask.cancel(true) targets its logical VT, keeps unrelated shared carrier clean, and termination waits actual finally
+PASS: shutdownNow interrupts owned VT roots, waits their actual finally, and preserves borrowed physical carrier
+ALL independent VT-owner review checks passed
+
+
+
+Automatic native entry / actual API / Java 21 default application target
+Alice: admin
+PASS success
+PASS failure
+PASS null
+PASS parallel
+PASS races
+PASS interrupt
+PASS interrupt-race
+LIMIT: callbacks on unmanaged platform threads still reject pending get
+PASS foreign
+PASS initial-interrupt
+PASS real HTTP: production supplier/get from a platform caller; same sole carrier serves health while query is pending; actual value, locals, finally, and graceful logical shutdown
+Managed lifecycle fails=false: PASS pending Future, same-carrier progress, original outcome, locals/finally, graceful shutdown and declined cancellation
+Managed lifecycle fails=true: PASS pending Future, same-carrier progress, original outcome, locals/finally, graceful shutdown and declined cancellation
+Fast/inline completion races: PASS 2000 logical jobs, exact outcomes and single cleanup/completion
+Borrowed carrier closes first: PASS fallback resume preserves outcome and finally
+execute failure: PASS original uncaught failure after caller finally; foreign cancellable tasks rejected
+ALL managed native executor proof checks passed
+PASS uncaught failure, finally, and background lifetime
+
+Automatic native entry / actual API / Java 25 default application target
+Alice: admin
+PASS success
+PASS failure
+PASS null
+PASS parallel
+PASS races
+PASS interrupt
+PASS interrupt-race
+LIMIT: callbacks on unmanaged platform threads still reject pending get
+PASS foreign
+PASS initial-interrupt
+PASS real HTTP: production supplier/get from a platform caller; same sole carrier serves health while query is pending; actual value, locals, finally, and graceful logical shutdown
+Managed lifecycle fails=false: PASS pending Future, same-carrier progress, original outcome, locals/finally, graceful shutdown and declined cancellation
+Managed lifecycle fails=true: PASS pending Future, same-carrier progress, original outcome, locals/finally, graceful shutdown and declined cancellation
+Fast/inline completion races: PASS 2000 logical jobs, exact outcomes and single cleanup/completion
+Borrowed carrier closes first: PASS fallback resume preserves outcome and finally
+execute failure: PASS original uncaught failure after caller finally; foreign cancellable tasks rejected
+ALL managed native executor proof checks passed
+PASS uncaught failure, finally, and background lifetime
+
+Reproduced native ownership and migration hazards / Java 21
+before get
+same worker handles unrelated work
+after get: hello, local=37
+bodyCalls=1, finallyCalls=1
+tryPreempt: Not implemented
+Cancelling suspended FutureTask interrupted unrelated carrier task=true
+Unrelated task sees flow context: suspended-flow
+Unrelated task is treated as lock owner: true
+Resumed flow sees context: unrelated-task
+marker executed: true
+platform workers created: 2
+original worker state: WAITING
+marker used original worker: false
+Existing frame after redefine: original active method
+New invocation after redefine: replacement method
+
+Reproduced native ownership and migration hazards / Java 25
+before get
+same worker handles unrelated work
+after get: hello, local=37
+bodyCalls=1, finallyCalls=1
+tryPreempt: Not implemented
+Cancelling suspended FutureTask interrupted unrelated carrier task=true
+Unrelated task sees flow context: suspended-flow
+Unrelated task is treated as lock owner: true
+Resumed flow sees context: unrelated-task
+marker executed: true
+platform workers created: 2
+original worker state: WAITING
+marker used original worker: false
+Existing frame after redefine: original active method
+New invocation after redefine: replacement method
