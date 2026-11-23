@@ -1,0 +1,944 @@
+{
+  "note": "Cold/exploratory runs; not mixed into the primary warmed comparison. The first run aborted on private-agent errors after recording five successful alternatives.",
+  "runs": {
+    "compare-jdk21": {
+      "jvm": "openjdk version \"21.0.13.1\" 2026-11-17 LTS\nOpenJDK Runtime Environment Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS)\nOpenJDK 64-Bit Server VM Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS, mixed mode, sharing)",
+      "core_source": "origin/main@3d070a36f85f68e91d360bfef7f232f4aa1dabad",
+      "boot_sha256": "377d3d788e616885eb8c517e82a29af3961c38704d7e79dd46903f89ea7c3d0c",
+      "settings": {
+        "request_workers": 4,
+        "compensated_max_workers": 10,
+        "active_processors": 2,
+        "heap_mb": 512,
+        "db_pool_size": 10,
+        "sleep_seconds": 0.01,
+        "concurrency": 32,
+        "connections": 4,
+        "repetitions": 5,
+        "warmup_seconds": 1,
+        "measure_seconds": 3
+      },
+      "variants": {
+        "fixed": {
+          "samples": [
+            {
+              "rps": 346.4767106274815,
+              "count": 1069,
+              "p95_ms": 114.545507
+            },
+            {
+              "rps": 352.74133950267156,
+              "count": 1086,
+              "p95_ms": 114.882489
+            },
+            {
+              "rps": 354.7807712082363,
+              "count": 1096,
+              "p95_ms": 125.242965
+            },
+            {
+              "rps": 365.58193058825594,
+              "count": 1124,
+              "p95_ms": 110.209907
+            },
+            {
+              "rps": 357.7466624787322,
+              "count": 1103,
+              "p95_ms": 105.486846
+            }
+          ],
+          "median_rps": 354.7807712082363,
+          "median_p95_ms": 114.545507,
+          "min_rps": 346.4767106274815,
+          "max_rps": 365.58193058825594,
+          "count": 5478,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 7370
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": false,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 0,
+              "gatedPlatformCallers": 4,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 35,
+              "platformPeakCount": 35,
+              "jdkCarrierSnapshot": 2
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 0,
+              "gatedPlatformCallers": 4,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 39,
+              "platformPeakCount": 39,
+              "jdkCarrierSnapshot": 2
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 0,
+            "gatedPlatformCallers": 4,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 39,
+            "platformPeakCount": 39,
+            "jdkCarrierSnapshot": 2
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 0,
+            "gatedPlatformCallers": 4,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 7370,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 39,
+            "platformPeakCount": 39,
+            "jdkCarrierSnapshot": 2
+          }
+        },
+        "public": {
+          "samples": [
+            {
+              "rps": 769.4362255593628,
+              "count": 2335,
+              "p95_ms": 61.973808
+            },
+            {
+              "rps": 904.6260616937021,
+              "count": 2739,
+              "p95_ms": 43.473771
+            },
+            {
+              "rps": 936.8646505656741,
+              "count": 2836,
+              "p95_ms": 37.087281
+            },
+            {
+              "rps": 935.4149800329245,
+              "count": 2838,
+              "p95_ms": 38.080355
+            },
+            {
+              "rps": 917.6784347425888,
+              "count": 2790,
+              "p95_ms": 39.071324
+            }
+          ],
+          "median_rps": 917.6784347425888,
+          "median_p95_ms": 39.071324,
+          "min_rps": 769.4362255593628,
+          "max_rps": 936.8646505656741,
+          "count": 13538,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 17817,
+            "queryPlatformCallers": 0
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": true,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 31,
+              "platformPeakCount": 31,
+              "jdkCarrierSnapshot": 2
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 35,
+              "platformPeakCount": 35,
+              "jdkCarrierSnapshot": 2
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 35,
+            "platformPeakCount": 35,
+            "jdkCarrierSnapshot": 2
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 17817,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 35,
+            "platformPeakCount": 35,
+            "jdkCarrierSnapshot": 2
+          }
+        },
+        "public-agent": {
+          "samples": [
+            {
+              "rps": 677.806163309145,
+              "count": 2060,
+              "p95_ms": 71.876123
+            },
+            {
+              "rps": 890.0267874945457,
+              "count": 2695,
+              "p95_ms": 44.584688
+            },
+            {
+              "rps": 938.2613849954182,
+              "count": 2841,
+              "p95_ms": 37.336219
+            },
+            {
+              "rps": 929.884670484729,
+              "count": 2819,
+              "p95_ms": 38.499633
+            },
+            {
+              "rps": 936.3914799539408,
+              "count": 2837,
+              "p95_ms": 38.496048
+            }
+          ],
+          "median_rps": 929.884670484729,
+          "median_p95_ms": 38.499633,
+          "min_rps": 677.806163309145,
+          "max_rps": 938.2613849954182,
+          "count": 13252,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 17591,
+            "queryPlatformCallers": 0
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": true,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 31,
+              "platformPeakCount": 31,
+              "jdkCarrierSnapshot": 2
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 35,
+              "platformPeakCount": 35,
+              "jdkCarrierSnapshot": 2
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 35,
+            "platformPeakCount": 35,
+            "jdkCarrierSnapshot": 2
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 17591,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 35,
+            "platformPeakCount": 35,
+            "jdkCarrierSnapshot": 2
+          }
+        },
+        "callback": {
+          "samples": [
+            {
+              "rps": 744.3547907085923,
+              "count": 2285,
+              "p95_ms": 69.460712
+            },
+            {
+              "rps": 922.4748684767098,
+              "count": 2795,
+              "p95_ms": 38.800163
+            },
+            {
+              "rps": 925.1039643048467,
+              "count": 2805,
+              "p95_ms": 39.088481
+            },
+            {
+              "rps": 941.6131011517649,
+              "count": 2854,
+              "p95_ms": 38.62865
+            },
+            {
+              "rps": 942.951092165797,
+              "count": 2859,
+              "p95_ms": 39.141178
+            }
+          ],
+          "median_rps": 925.1039643048467,
+          "median_p95_ms": 39.088481,
+          "min_rps": 744.3547907085923,
+          "max_rps": 942.951092165797,
+          "count": 13598,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 17862,
+            "queryPlatformCallers": 0
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": true,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 35,
+              "platformPeakCount": 35,
+              "jdkCarrierSnapshot": 2
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 39,
+              "platformPeakCount": 39,
+              "jdkCarrierSnapshot": 2
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 39,
+            "platformPeakCount": 39,
+            "jdkCarrierSnapshot": 2
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 17862,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 39,
+            "platformPeakCount": 39,
+            "jdkCarrierSnapshot": 2
+          }
+        },
+        "compensated": {
+          "samples": [
+            {
+              "rps": 817.5279055860042,
+              "count": 2481,
+              "p95_ms": 63.844183
+            },
+            {
+              "rps": 883.2211464381979,
+              "count": 2678,
+              "p95_ms": 56.476719
+            },
+            {
+              "rps": 916.7775307139491,
+              "count": 2779,
+              "p95_ms": 50.35992
+            },
+            {
+              "rps": 914.6652159001043,
+              "count": 2773,
+              "p95_ms": 52.955918
+            },
+            {
+              "rps": 927.2669478527649,
+              "count": 2815,
+              "p95_ms": 47.131594
+            }
+          ],
+          "median_rps": 914.6652159001043,
+          "median_p95_ms": 52.955918,
+          "min_rps": 817.5279055860042,
+          "max_rps": 927.2669478527649,
+          "count": 13526,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 17763
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": true,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 0,
+              "gatedPlatformCallers": 4,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 36,
+              "platformPeakCount": 36,
+              "jdkCarrierSnapshot": 2
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 0,
+              "gatedPlatformCallers": 4,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 41,
+              "platformPeakCount": 41,
+              "jdkCarrierSnapshot": 2
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 0,
+            "gatedPlatformCallers": 4,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 41,
+            "platformPeakCount": 41,
+            "jdkCarrierSnapshot": 2
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 0,
+            "gatedPlatformCallers": 4,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 17763,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 45,
+            "platformPeakCount": 45,
+            "jdkCarrierSnapshot": 2
+          }
+        }
+      }
+    },
+    "lazy-control-jdk21": {
+      "jvm": "openjdk version \"21.0.13.1\" 2026-11-17 LTS\nOpenJDK Runtime Environment Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS)\nOpenJDK 64-Bit Server VM Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS, mixed mode, sharing)",
+      "core_source": "origin/main@3d070a36f85f68e91d360bfef7f232f4aa1dabad",
+      "boot_sha256": "377d3d788e616885eb8c517e82a29af3961c38704d7e79dd46903f89ea7c3d0c",
+      "settings": {
+        "request_workers": 4,
+        "compensated_max_workers": 10,
+        "active_processors": 2,
+        "heap_mb": 512,
+        "db_pool_size": 10,
+        "sleep_seconds": 0.01,
+        "concurrency": 32,
+        "connections": 4,
+        "repetitions": 5,
+        "warmup_seconds": 1,
+        "measure_seconds": 3
+      },
+      "variants": {
+        "lazy": {
+          "samples": [
+            {
+              "rps": 659.5916615837626,
+              "count": 2000,
+              "p95_ms": 71.375942
+            },
+            {
+              "rps": 882.9284421425739,
+              "count": 2678,
+              "p95_ms": 45.853116
+            },
+            {
+              "rps": 897.9712978916564,
+              "count": 2718,
+              "p95_ms": 44.79698
+            },
+            {
+              "rps": 932.4867165378837,
+              "count": 2827,
+              "p95_ms": 37.559114
+            },
+            {
+              "rps": 912.258508937715,
+              "count": 2766,
+              "p95_ms": 41.208125
+            }
+          ],
+          "median_rps": 897.9712978916564,
+          "median_p95_ms": 44.79698,
+          "min_rps": 659.5916615837626,
+          "max_rps": 932.4867165378837,
+          "count": 12989,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 15011,
+            "queryPlatformCallers": 2139
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": true,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 0,
+              "gatedPlatformCallers": 4,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 35,
+              "platformPeakCount": 35,
+              "jdkCarrierSnapshot": 2
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 0,
+              "gatedPlatformCallers": 4,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 39,
+              "platformPeakCount": 39,
+              "jdkCarrierSnapshot": 2
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 0,
+            "gatedPlatformCallers": 4,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 39,
+            "platformPeakCount": 39,
+            "jdkCarrierSnapshot": 2
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 0,
+            "gatedPlatformCallers": 4,
+            "queryVirtualCallers": 15011,
+            "queryPlatformCallers": 2139,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 39,
+            "platformPeakCount": 39,
+            "jdkCarrierSnapshot": 2
+          }
+        },
+        "virtual": {
+          "samples": [
+            {
+              "rps": 774.4510191971664,
+              "count": 2348,
+              "p95_ms": 65.374054
+            },
+            {
+              "rps": 892.9939361398457,
+              "count": 2708,
+              "p95_ms": 43.557242
+            },
+            {
+              "rps": 894.2566737542661,
+              "count": 2711,
+              "p95_ms": 43.90931
+            },
+            {
+              "rps": 945.0501880975281,
+              "count": 2865,
+              "p95_ms": 37.727942
+            },
+            {
+              "rps": 947.9401116412422,
+              "count": 2874,
+              "p95_ms": 37.709626
+            }
+          ],
+          "median_rps": 894.2566737542661,
+          "median_p95_ms": 43.557242,
+          "min_rps": 774.4510191971664,
+          "max_rps": 947.9401116412422,
+          "count": 13506,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 17756,
+            "queryPlatformCallers": 0
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": true,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 31,
+              "platformPeakCount": 31,
+              "jdkCarrierSnapshot": 2
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 0,
+              "factoryLive": 0,
+              "factoryPeak": 0,
+              "platformThreadCount": 35,
+              "platformPeakCount": 35,
+              "jdkCarrierSnapshot": 2
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 35,
+            "platformPeakCount": 35,
+            "jdkCarrierSnapshot": 2
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 17756,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 0,
+            "factoryLive": 0,
+            "factoryPeak": 0,
+            "platformThreadCount": 35,
+            "platformPeakCount": 35,
+            "jdkCarrierSnapshot": 2
+          }
+        }
+      }
+    },
+    "private-diagnostic-jdk21": {
+      "jvm": "openjdk version \"21.0.13.1\" 2026-11-17 LTS\nOpenJDK Runtime Environment Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS)\nOpenJDK 64-Bit Server VM Corretto-21.0.13.1.2 (build 21.0.13.1+2-LTS, mixed mode, sharing)",
+      "core_source": "origin/main@3d070a36f85f68e91d360bfef7f232f4aa1dabad",
+      "boot_sha256": "377d3d788e616885eb8c517e82a29af3961c38704d7e79dd46903f89ea7c3d0c",
+      "settings": {
+        "request_workers": 4,
+        "compensated_max_workers": 10,
+        "active_processors": 2,
+        "heap_mb": 512,
+        "db_pool_size": 10,
+        "sleep_seconds": 0.01,
+        "concurrency": 32,
+        "connections": 4,
+        "repetitions": 3,
+        "initial_warmup_seconds": 0,
+        "warmup_seconds": 1,
+        "measure_seconds": 3
+      },
+      "variants": {
+        "private-agent": {
+          "samples": [
+            {
+              "rps": 680.5915433828022,
+              "count": 2056,
+              "p95_ms": 74.503549
+            },
+            {
+              "rps": 865.6215876048187,
+              "count": 2624,
+              "p95_ms": 54.470284
+            },
+            {
+              "rps": 919.8337566226359,
+              "count": 2791,
+              "p95_ms": 39.76442
+            }
+          ],
+          "median_rps": 865.6215876048187,
+          "median_p95_ms": 54.470284,
+          "min_rps": 680.5915433828022,
+          "max_rps": 919.8337566226359,
+          "count": 7471,
+          "errors": 0,
+          "caller_delta": {
+            "queryVirtualCallers": 9707,
+            "queryPlatformCallers": 0
+          },
+          "functional": {
+            "actual_db_result": 50,
+            "saturated_health_progress": true,
+            "held": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 0,
+              "callerFinally": 0,
+              "bodyFinally": 0,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 33,
+              "platformPeakCount": 33,
+              "jdkCarrierSnapshot": 0
+            },
+            "final": {
+              "entries": 4,
+              "bodies": 4,
+              "afterGet": 4,
+              "callerFinally": 4,
+              "bodyFinally": 4,
+              "gatedVirtualCallers": 4,
+              "gatedPlatformCallers": 0,
+              "queryVirtualCallers": 0,
+              "queryPlatformCallers": 0,
+              "factoryCreated": 4,
+              "factoryLive": 4,
+              "factoryPeak": 4,
+              "platformThreadCount": 37,
+              "platformPeakCount": 37,
+              "jdkCarrierSnapshot": 0
+            }
+          },
+          "before": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 0,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 37,
+            "platformPeakCount": 37,
+            "jdkCarrierSnapshot": 0
+          },
+          "after": {
+            "entries": 4,
+            "bodies": 4,
+            "afterGet": 4,
+            "callerFinally": 4,
+            "bodyFinally": 4,
+            "gatedVirtualCallers": 4,
+            "gatedPlatformCallers": 0,
+            "queryVirtualCallers": 9707,
+            "queryPlatformCallers": 0,
+            "factoryCreated": 4,
+            "factoryLive": 4,
+            "factoryPeak": 4,
+            "platformThreadCount": 37,
+            "platformPeakCount": 37,
+            "jdkCarrierSnapshot": 0
+          }
+        }
+      }
+    }
+  }
+}

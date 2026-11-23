@@ -1,0 +1,44 @@
+Stable core: origin/main 3d070a3, ordinary Blockless.supplier, no new Supplier API.
+Own probes use public APIs, no JDK exports/opens/agents.
+
+SupplierContractProbe:
+  Fixed one-platform-worker baseline: exit 1 DISPATCH_STALLED on Corretto21/25.
+  Diagnostic first releases its held I/O and verifies actual value/cleanup.
+  Public JDK virtual executor control: exit 0 on Corretto21/25.
+
+PublicTaskExecutor candidate:
+  Corretto21/25 and Oracle21/25: functional probe exit 0 for actualUser + originalfailure.
+  caller_virtual=true, marker_virtual=true, tracked platform factory count=0.
+  Separate JVM-global native carrier names/peak were observed and printed.
+  ForeignTaskCancellationProbe exit 0 on all four runtimes, both cleanup orders.
+
+LazyHelpingExecutor candidate:
+  Corretto21/25 and Oracle21/25: functional probe exit 0 for actualUser + originalfailure.
+  caller_virtual=false, marker_virtual=true, tracked platform factory count=1.
+  Both ordinary caller context and inherited request state stay isolated.
+  ForeignTaskCancellationProbe exit 0 on all four runtimes, both cleanup orders.
+  This means original raw caller helps dispatch B onto DIFFERENT shared carriers;
+  the caller's native frames are retained, not unmounted as a VT continuation.
+
+QueuedCancellationCallbackProbe:
+  Frozen lazy runtime-v1: exit1 QUEUED_CALLBACK_STALLED on all four runtimes.
+  Frozen lazy runtime-v2: exit0 on all four runtimes.
+  Foreign FutureTask.done can wait for native interrupted cleanup querying owner state.
+  Bounded diagnostics finish the owner before reporting failure, with no hung JVM.
+
+FailingCancellationCallbackProbe:
+  Frozen lazy runtime-v2 Corretto21: exit1 QUEUED_FUTURE_STRANDED.
+  A first done callback throws; a second accepted queued Future remains NEW even
+  though owner termination succeeds. The diagnostic settles that Future afterward.
+  Frozen lazy v3 Corretto21/25 and Oracle21/25: exit0; later queued Futures are cancelled despite
+  the first callback failure, which is propagated after all settlement attempts.
+  The earlier queued-callback ordering probe also passes on all four v3 runtimes.
+  Exact frozen v3 Oracle21/25 additionally passed SupplierContractProbe and
+  ForeignTaskCancellationProbe: eight Oracle probe launches, all exit0.
+  Record: ../lazy-help/results/v3-oracle-pass.txt
+  v3 full runtime SHA256:
+  8031bd954ba19c7e16cf09f49fc9ef9d54f09416e3316685eb2c2c343849b4b6
+
+Raw logs remain in acceptance/target/*.txt. Tests are functional/lifecycle proofs,
+not throughput measurements and not global four-platform-thread budget proofs.
+Parent owns the real gRPC/PostgreSQL load phase and final resource accounting.

@@ -1,0 +1,41 @@
+Frozen v3 SHA-256: 8031bd954ba19c7e16cf09f49fc9ef9d54f09416e3316685eb2c2c343849b4b6
+Classpath priority: v3 jar; precompiled acceptance; stable core
+No rebuild or artifact mutation. No agent/export/open/preview flags.
+
+java version "21.0.12.1" 2026-08-18 LTS
+Java(TM) SE Runtime Environment (build 21.0.12.1+1-LTS-4)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.12.1+1-LTS-4, mixed mode, sharing)
+
+SupplierContractProbe: exit 0
+FUNCTIONAL_PASS outcome=actual-User; caller_virtual=false; marker_virtual=true; marker_inherited=outside; tracked_platform_created=1; new_platform_snapshot=[acceptance-request-1, ForkJoinPool-1-worker-1]; peak_platform_total=8; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+FUNCTIONAL_PASS outcome=original-failure; caller_virtual=false; marker_virtual=true; marker_inherited=outside; tracked_platform_created=1; new_platform_snapshot=[acceptance-request-1]; peak_platform_total=8; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+
+ForeignTaskCancellationProbe: exit 0
+LIFECYCLE_PASS caller_virtual=false; foreign_virtual=true; caller_cleanup_first=true; tracked_platform_created=1; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+LIFECYCLE_PASS caller_virtual=false; foreign_virtual=true; caller_cleanup_first=false; tracked_platform_created=1; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+
+QueuedCancellationCallbackProbe: exit 0
+LIFECYCLE_PASS queued FutureTask.done observed native interruption/cleanup without owner-lock deadlock
+
+FailingCancellationCallbackProbe: exit 0
+LIFECYCLE_PASS foreign done exception does not strand later accepted Futures
+
+java version "25.0.5.1" 2026-11-17 LTS
+Java(TM) SE Runtime Environment (build 25.0.5.1+4-LTS-20)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0.5.1+4-LTS-20, mixed mode, sharing)
+
+SupplierContractProbe: exit 0
+FUNCTIONAL_PASS outcome=actual-User; caller_virtual=false; marker_virtual=true; marker_inherited=outside; tracked_platform_created=1; new_platform_snapshot=[VirtualThread-unblocker, acceptance-request-1, ForkJoinPool-1-worker-1]; peak_platform_total=9; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+FUNCTIONAL_PASS outcome=original-failure; caller_virtual=false; marker_virtual=true; marker_inherited=outside; tracked_platform_created=1; new_platform_snapshot=[acceptance-request-1]; peak_platform_total=9; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+
+ForeignTaskCancellationProbe: exit 0
+LIFECYCLE_PASS caller_virtual=false; foreign_virtual=true; caller_cleanup_first=true; tracked_platform_created=1; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+LIFECYCLE_PASS caller_virtual=false; foreign_virtual=true; caller_cleanup_first=false; tracked_platform_created=1; factory=helping.LazyHelpingExecutor#newFixedThreadPool
+
+QueuedCancellationCallbackProbe: exit 0
+LIFECYCLE_PASS queued FutureTask.done observed native interruption/cleanup without owner-lock deadlock
+
+FailingCancellationCallbackProbe: exit 0
+LIFECYCLE_PASS foreign done exception does not strand later accepted Futures
+
+PASS: all eight exact-v3 Oracle acceptance runs completed with exit 0.

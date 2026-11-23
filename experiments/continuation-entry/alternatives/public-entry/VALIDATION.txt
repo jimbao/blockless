@@ -1,0 +1,53 @@
+Stable core under test: upstream main 3d070a3, no continuation module.
+Business method: Blockless.supplier(ordinary blocking callable); immediate user.get().
+
+Corretto 21.0.13.1+2, Corretto 25.0.5.1+2, Oracle 21.0.12.1+1, Oracle 25.0.5.1+4:
+  Public owner acceptance: exit 0.
+  Held pending get returns actual User after release.
+  Another logical root progresses before query release.
+  Caller identity, local, ThreadLocal and ReentrantLock ownership retained.
+  Unrelated logical root gets neither caller context nor lock ownership.
+  Body/caller entry and finally execute once; query finally precedes result.
+  Original business failure identity retained.
+  Caller cancellation leaves unrelated root untouched.
+  Shutdown waits for actual cancelled caller finally, beyond Future cancellation.
+  Observed default physical pool workers: ForkJoinPool-1-worker-1 and worker-2.
+
+Direct JDK virtual-thread-per-task executor cancellation/finally negative control:
+  Corretto/Oracle 21: process exits 1 with
+    AssertionError: owner terminated before cancelled caller finally finished
+  Corretto/Oracle 25: process exits 0.
+  PublicTaskExecutor's inherited-submit/delegate-execute adapter passes all four.
+
+All four runtimes, daemon lifetime subprocess:
+  Original main prints MAIN_RETURN while a query is held on controller stdin.
+  JVM exits 0 before release; ROOT_finished is not printed.
+  This intentionally demonstrates the server/application-lifetime precondition.
+
+All four runtimes, optional public-only startup agent:
+  Same uninstrumented fixed-worker acceptance exits 1 with bounded diagnosis:
+    AssertionError: native fixed worker stays occupied by pending get
+  The harness releases the body and reads its actual value before reporting failure.
+  Agent acceptance exits 0; plain Blockless supplier/get business source unchanged.
+  All four fixed/cached overloads and factory method references transformed.
+  Custom physical ThreadFactory deliberately not called in public-scheduler mode.
+  Single/scheduled and excluded factories unchanged.
+  Isolated parent-null loader and incompatible application ASM coexistence pass.
+  Named-module entry passes without manual module reads or opens.
+  Runtime helper jdeps --jdk-internals: no output.
+  Runtime helper jdeps --print-module-deps: java.base.
+
+No benchmark or real application/load was launched by this advisor.
+The root investigator owns comparable real-gRPC throughput measurements.
+Published immutable Java-21-built pair for that measurement:
+  target/pinned-agent/public-entry-agent.jar
+  target/pinned-agent/public-entry-runtime.jar
+Agent options: include=example.,io.grpc.internal. (carrier controls unsupported).
+
+Final build-time check on Corretto21:
+  Native baseline exits1 with occupied-worker diagnosis after value/cleanup.
+  Woven process exits0; all four overloads and method references rewritten,
+  actual stable supplier/get value and finally pass, initializer trap never runs.
+  Reusing a nonempty output is rejected before rewriting to avoid stale classes.
+  Rebuilt offline real-gRPC functional checks pass on Corretto21; the primary
+  real-gRPC offline checks also passed on Corretto21/25.

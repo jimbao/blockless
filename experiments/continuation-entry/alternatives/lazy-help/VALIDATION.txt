@@ -1,0 +1,77 @@
+Candidate: helping.LazyHelpingExecutor plus owned OutcomeSupplier shadow hooks.
+Stable Blockless baseline source: upstream main 3d070a3, Java-21-compiled classes.
+Business code calls Blockless.supplier(...).get() directly; no new supplier API.
+
+Immutable full v3 runtime bundle used for root integration:
+  target/lazy-help-runtime-v3.jar
+  SHA-256 8031bd954ba19c7e16cf09f49fc9ef9d54f09416e3316685eb2c2c343849b4b6
+Contains all helping runtime classes/nested classes AND
+io/github/pjlabs/blockless/OutcomeSupplier.class plus its enum-switch helper.
+Put this jar BEFORE stable core. A helper-only bundle would omit the required hooks.
+
+Raw platform A keeps its original identity and native frames. During pending get,
+it starts queued B on public virtual threads, on the global/default scheduler for
+the ordinary platform/default-VT submitters exercised here. B does not mount on A.
+
+Functional/monitor/cancellation/shutdown probes passed on:
+  Corretto 21.0.13.1+2
+  Corretto 25.0.5.1+2
+  Oracle JDK 21.0.12.1+1
+  Oracle JDK 25.0.5.1+4
+
+These include sole original platform worker reuse, actual T returned later,
+caller locals/ordinary TLS/lock identity, B submission ITL/CCL, exact finally counts,
+B exclusion from A's synchronized monitor, cancellation of native A without
+interrupting B, shutdown waiting helped actual exit, shutdownNow interrupting both
+root types while waiting cleanup, and independent Blockless body completion after
+caller-owner termination.
+
+2,000-task completion/registration/cancellation churn passed on Corretto21+25:
+all actual root cleanup joined and the wait registration map was empty afterward.
+
+Shutdown-only subprocess lifetime proof passed on all four runtimes:
+original main returns while helped B waits on controller input. JVM stays alive,
+then B receives input and finishes; original platform worker exits. No extra
+platform keeper is created. Probe uses the default non-daemon platform factory.
+
+Two real shutdown issues were reproduced and fixed:
+  v1: queued FutureTask.done ran while owner state lock was held and before native
+      interruption. Its observer could not see native cleanup querying owner state.
+      Raw negative output: results/v1-queued-callback-failure.txt
+  v2: a throwing first FutureTask.done aborted the queued cancellation loop,
+      leaving a later accepted Future permanently NEW while owner terminated.
+      Raw negative output: results/v2-throwing-done-failure.txt
+  v3: interruption/cancellation actions run outside owner state lock. All actions
+      are attempted; first failure/suppressed failures are thrown after all drained
+      Futures settle. Independent acceptance probes passed Corretto21+25 and
+      Oracle21+25:
+      results/v3-queued-callback-pass.txt
+      results/v3-throwing-done-pass.txt
+      results/v3-oracle-pass.txt
+
+Own full suite passed Corretto21 after the v3 change. The final immutable v3 jar
+also passed all four acceptance probes on exact Oracle builds 21.0.12.1+1-LTS-4
+and 25.0.5.1+4-LTS-20: SupplierContractProbe (value and original failure),
+ForeignTaskCancellationProbe (both cleanup orders), QueuedCancellationCallbackProbe,
+and FailingCancellationCallbackProbe. All eight Oracle invocations exited 0;
+the original caller remained platform-threaded and the helped marker was virtual.
+The jar SHA-256 was verified before and after these runs, with no rebuild.
+Full exact-version output: results/v3-oracle-pass.txt.
+
+Earlier broader monitor/churn/subprocess-lifetime matrices above preceded the
+final failure-aggregation change and remain identified separately. No claim of
+identical exact-artifact coverage for every earlier probe is inferred from them.
+
+The probes use ActiveProcessorCount=2 to set a comparable default carrier budget;
+that flag is not needed by the implementation. No agent, native export/open,
+preview option, private JDK class or third-party runtime dependency is used.
+
+Integration limits: selected owned executor and the core wait hooks are required.
+Other waits/unknown queues are not intercepted. Concrete ThreadPoolExecutor hooks,
+metrics, source type casts, and serial concurrency guarantees are not preserved.
+Native roots retain ordinary platform-pool task context semantics; helped roots
+are fresh virtual threads. ScopedValue/private custom-scheduler integration is
+outside the proof. Independently spawned producer bodies remain unstructured.
+
+Throughput: root owns all gRPC/load tests; functional/race successes here alone
+do not establish 900 requests/s or unmounting of A's raw stack.

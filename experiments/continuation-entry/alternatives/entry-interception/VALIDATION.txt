@@ -1,0 +1,30 @@
+Runtime core: unchanged stable Blockless from origin/main 3d070a3.
+Framework implementation: cached grpc-core 1.63.0, actual SerializingExecutor.
+
+Corretto 21.0.13.1+2 and 25.0.5.1+2; Oracle 21.0.12.1+1 and 25.0.5.1+4:
+  No-agent carrier-release control exits 1 after bounded worker diagnosis/cleanup.
+  Callback-loop agent exits 0 and returns the actual User from direct get.
+  No JVM exports, opens, preview flags, private builder or runtime helper.
+
+Positive assertions:
+  Same original sole platform request worker runs another task during pending get.
+  Caller reports virtual identity because entry happened before business code.
+  Saved local, caller TLS/lock ownership and grpc Context survive suspension.
+  Unrelated request inherits neither caller context nor lock ownership.
+  Same-stream queued callback remains ordered after the pending callback.
+  Body finally completes before get publishes; caller finally executes once.
+
+Explicit scope/lifetime limit:
+  Original PT executor can terminate while the logical request remains pending.
+  Its current virtual drain finishes callbacks queued during that pending request.
+  Once drain ends, new scheduling on the closed dispatcher rejects.
+  Application/framework owns request completion and JVM liveness; no keeper added.
+
+Concrete rejected placements:
+  Generic Runnable.run handoff marks its surrounding Future and executor finished
+  before the actual get/result/finally. Reproduced, not a passing ownership claim.
+  Service.query handoff returns through outer advice before the actual query runs;
+  that advice's resource scope is already closed. Reproduced.
+
+An actual application benchmark is root-coordinated. This file claims functional
+evidence only, not 900 RPS or universal framework/ExecutorService equivalence.

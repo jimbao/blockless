@@ -1,0 +1,3 @@
+Exception in thread "main" java.lang.AssertionError: QUEUED_CALLBACK_STALLED: cancellation callback could not observe interrupted native cleanup calling owner.isShutdown
+	at admission.QueuedCancellationCallbackProbe.require(QueuedCancellationCallbackProbe.java:71)
+	at admission.QueuedCancellationCallbackProbe.main(QueuedCancellationCallbackProbe.java:57)

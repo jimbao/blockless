@@ -1,0 +1,4 @@
+LOAD mode=fixed4 rps=389.33 measured_count=1168 errors=0 created_request_workers=4 peak_live_request_workers=4 distinct_callers=4 peak_io_bodies=4 shared_worker_snapshot=[ForkJoinPool-1-worker-1, ForkJoinPool-1-worker-2]
+LOAD mode=forkjoin4 rps=391.67 measured_count=1175 errors=0 created_request_workers=4 peak_live_request_workers=4 distinct_callers=4 peak_io_bodies=4 shared_worker_snapshot=[ForkJoinPool-1-worker-1, ForkJoinPool-1-worker-2]
+LOAD mode=compensated10 rps=983.33 measured_count=2950 errors=0 created_request_workers=10 peak_live_request_workers=10 distinct_callers=10 peak_io_bodies=10 shared_worker_snapshot=[ForkJoinPool-1-worker-1, ForkJoinPool-1-worker-2]
+LOAD mode=fixed10 rps=983.33 measured_count=2950 errors=0 created_request_workers=10 peak_live_request_workers=10 distinct_callers=10 peak_io_bodies=10 shared_worker_snapshot=[ForkJoinPool-1-worker-1, ForkJoinPool-1-worker-2]

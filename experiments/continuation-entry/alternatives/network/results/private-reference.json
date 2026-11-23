@@ -1,0 +1,65 @@
+{
+  "verdict": "Inconsistent old private-scheduler reference; excluded from successful primary table.",
+  "failures": [
+    {
+      "run": "compare-jdk21",
+      "failed_phases": [
+        {
+          "phase": "2-warmup",
+          "count": 522,
+          "statusCodeDistribution": {
+            "DeadlineExceeded": 32,
+            "OK": 490
+          },
+          "errorDistribution": {
+            "rpc error: code = DeadlineExceeded desc = context deadline exceeded": 18,
+            "rpc error: code = DeadlineExceeded desc = stream terminated by RST_STREAM with error code: CANCEL": 14
+          }
+        }
+      ]
+    },
+    {
+      "run": "private-warmed-jdk21",
+      "failed_phases": [
+        {
+          "phase": "1-warmup",
+          "count": 515,
+          "statusCodeDistribution": {
+            "DeadlineExceeded": 32,
+            "OK": 483
+          },
+          "errorDistribution": {
+            "rpc error: code = DeadlineExceeded desc = context deadline exceeded": 26,
+            "rpc error: code = DeadlineExceeded desc = stream terminated by RST_STREAM with error code: CANCEL": 6
+          }
+        }
+      ],
+      "failure_snapshot": {
+        "entries": 4,
+        "bodies": 4,
+        "afterGet": 4,
+        "callerFinally": 4,
+        "bodyFinally": 4,
+        "gatedVirtualCallers": 4,
+        "gatedPlatformCallers": 0,
+        "queryVirtualCallers": 8706,
+        "queryPlatformCallers": 0,
+        "factoryCreated": 4,
+        "factoryLive": 4,
+        "factoryPeak": 4,
+        "platformThreadCount": 36,
+        "platformPeakCount": 37,
+        "jdkCarrierSnapshot": 0
+      }
+    }
+  ],
+  "successful_short_rerun": "exploratory-jdk21.json: private-diagnostic-jdk21",
+  "captured_stack_observations": [
+    "Four entry-request platform workers are waiting in ThreadPoolExecutor.getTask / LinkedBlockingQueue.take.",
+    "31 caller virtual threads are waiting at OutcomeSupplier.get / CountDownLatch.await.",
+    "One caller virtual thread is parked acquiring the LinkedBlockingQueue lock while scheduling a child through RetiringScheduler.execute.",
+    "32 additional virtual threads have empty captured stacks.",
+    "Supplier bodies include ten PostgreSQL socket waits and 22 Hikari connection waits."
+  ],
+  "root_cause": "Not established by the captured thread/virtual-thread dumps."
+}
